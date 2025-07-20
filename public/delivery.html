@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yetkazib Berish - SlotkayaSloboda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-amber-100 min-h-screen">
+    <div id="app">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-orange-600 to-amber-700 text-white shadow-xl">
+            <div class="container mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-3 rounded-xl">
+                            <i class="fas fa-truck text-2xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold">Yetkazib Berish</h1>
+                            <p class="text-orange-100">Haydovchi paneli</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-right">
+                            <p class="text-sm text-orange-100">Bugun</p>
+                            <p id="currentTime" class="font-semibold"></p>
+                        </div>
+                        <div class="bg-white/20 px-4 py-2 rounded-lg">
+                            <i class="fas fa-user mr-2"></i><span id="driverName">Haydovchi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg border-b">
+            <div class="container mx-auto px-6">
+                <div class="flex space-x-8 overflow-x-auto">
+                    <button class="nav-btn active py-4 px-6 border-b-3 border-orange-600 text-orange-600 font-semibold whitespace-nowrap" data-tab="orders">
+                        <i class="fas fa-list mr-2"></i>Buyurtmalar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-orange-600 transition-colors whitespace-nowrap" data-tab="map">
+                        <i class="fas fa-map mr-2"></i>Xarita
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-orange-600 transition-colors whitespace-nowrap" data-tab="statistics">
+                        <i class="fas fa-chart-bar mr-2"></i>Statistika
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-6 py-8">
+            <!-- Orders Tab -->
+            <div id="orders" class="tab-content">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Assigned Orders -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-bold mb-4 text-gray-800">Tayinlangan buyurtmalar</h3>
+                        <div id="assignedOrders" class="space-y-3">
+                            <!-- Assigned orders will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- In Progress Orders -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-bold mb-4 text-gray-800">Yetkazilayotgan</h3>
+                        <div id="inProgressOrders" class="space-y-3">
+                            <!-- In progress orders will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Completed Orders -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-bold mb-4 text-gray-800">Yetkazilgan</h3>
+                        <div id="completedOrders" class="space-y-3">
+                            <!-- Completed orders will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Tab -->
+            <div id="map" class="tab-content hidden">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-6 text-gray-800">Yetkazib berish xaritasi</h3>
+                    <div id="deliveryMap" class="h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                        <p class="text-gray-500">Xarita yuklanmoqda...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="statistics" class="tab-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center">
+                            <div class="p-4 bg-orange-100 rounded-full">
+                                <i class="fas fa-box text-orange-600 text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600 font-medium">Bugungi buyurtmalar</p>
+                                <p class="text-3xl font-bold text-gray-800" id="todayDeliveries">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center">
+                            <div class="p-4 bg-green-100 rounded-full">
+                                <i class="fas fa-check text-green-600 text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600 font-medium">Yetkazilgan</p>
+                                <p class="text-3xl font-bold text-gray-800" id="completedDeliveries">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center">
+                            <div class="p-4 bg-yellow-100 rounded-full">
+                                <i class="fas fa-clock text-yellow-600 text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600 font-medium">Kutilayotgan</p>
+                                <p class="text-3xl font-bold text-gray-800" id="pendingDeliveries">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center">
+                            <div class="p-4 bg-blue-100 rounded-full">
+                                <i class="fas fa-route text-blue-600 text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600 font-medium">Masofa (km)</p>
+                                <p class="text-3xl font-bold text-gray-800" id="totalDistance">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="delivery.js"></script>
+</body>
+</html>

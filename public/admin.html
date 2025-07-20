@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firma Boshqaruvi - SlotkayaSloboda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div id="app">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-xl">
+            <div class="container mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-3 rounded-xl">
+                            <i class="fas fa-building text-2xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold">Firma Boshqaruvi</h1>
+                            <p class="text-blue-100">SlotkayaSloboda Admin Panel</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-right">
+                            <p class="text-sm text-blue-100">Bugun</p>
+                            <p id="currentTime" class="font-semibold"></p>
+                        </div>
+                        <div class="bg-white/20 px-4 py-2 rounded-lg">
+                            <i class="fas fa-user-shield mr-2"></i>Admin
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg border-b">
+            <div class="container mx-auto px-6">
+                <div class="flex space-x-8 overflow-x-auto">
+                    <button class="nav-btn active py-4 px-6 border-b-3 border-blue-600 text-blue-600 font-semibold whitespace-nowrap" data-tab="dashboard">
+                        <i class="fas fa-chart-line mr-2"></i>Dashboard
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600 transition-colors whitespace-nowrap" data-tab="orders">
+                        <i class="fas fa-shopping-cart mr-2"></i>Buyurtmalar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600 transition-colors whitespace-nowrap" data-tab="products">
+                        <i class="fas fa-box mr-2"></i>Mahsulotlar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600 transition-colors whitespace-nowrap" data-tab="customers">
+                        <i class="fas fa-users mr-2"></i>Mijozlar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600 transition-colors whitespace-nowrap" data-tab="drivers">
+                        <i class="fas fa-truck mr-2"></i>Haydovchilar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600 transition-colors whitespace-nowrap" data-tab="admins">
+                        <i class="fas fa-user-shield mr-2"></i>Adminlar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600 transition-colors whitespace-nowrap" data-tab="statistics">
+                        <i class="fas fa-chart-bar mr-2"></i>Statistika
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-6 py-8">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="flex items-center">
+                            <div class="p-4 bg-blue-100 rounded-full">
+                                <i class="fas fa-shopping-cart text-blue-600 text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600 font-medium">Jami buyurtmalar</p>
+                                <p class="text-3xl font-bold text-gray-800" id="totalOrders">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="flex items-center">
+                            <div class="p-4 bg-green-100 rounded-full">
+                                <i class="fas fa-calendar-day text-green-600 text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600 font-medium">Bugungi buyurtmalar</p>
+                                <p class="text-3xl font-bold text-gray-800" id="todayOrders">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="flex items-center">
+                            <div class="p-4 bg-yellow-100 rounded-full">
+                                <i class="fas fa-users text-yellow-600 text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600 font-medium">Mijozlar</p>
+                                <p class="text-3xl font-bold text-gray-800" id="totalCustomers">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="flex items-center">
+                            <div class="p-4 bg-red-100 rounded-full">
+                                <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600 font-medium">Kutilayotgan</p>
+                                <p class="text-3xl font-bold text-gray-800" id="pendingOrders">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-6 text-gray-800">So'nggi buyurtmalar</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buyurtma №</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mijoz</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Summa</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holat</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sana</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTable" class="bg-white divide-y divide-gray-200">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="orders" class="tab-content hidden">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">Barcha buyurtmalar</h3>
+                        <div class="flex space-x-4">
+                            <select id="statusFilter" class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Barcha holatlar</option>
+                                <option value="new">Yangi</option>
+                                <option value="confirmed">Tasdiqlangan</option>
+                                <option value="preparing">Tayyorlanmoqda</option>
+                                <option value="ready">Tayyor</option>
+                                <option value="delivered">Yetkazilgan</option>
+                            </select>
+                            <button id="assignOrdersBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-truck mr-2"></i>Haydovchiga tayinlash
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3">
+                                        <input type="checkbox" id="selectAllOrders" class="rounded">
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buyurtma №</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mijoz</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Do'kon</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mahsulotlar</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Summa</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holat</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sana</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amallar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable" class="bg-white divide-y divide-gray-200">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="products" class="tab-content hidden">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">Mahsulotlar boshqaruvi</h3>
+                        <div class="flex space-x-4">
+                            <button id="addCategoryBtn" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                <i class="fas fa-plus mr-2"></i>Kategoriya qo'shish
+                            </button>
+                            <button id="addProductBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-plus mr-2"></i>Mahsulot qo'shish
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customers Tab -->
+            <div id="customers" class="tab-content hidden">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-6 text-gray-800">Mijozlar</h3>
+                    <div id="customersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Customers will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drivers Tab -->
+            <div id="drivers" class="tab-content hidden">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">Haydovchilar</h3>
+                        <button id="addDriverBtn" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Haydovchi qo'shish
+                        </button>
+                    </div>
+                    <div id="driversGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Drivers will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admins Tab -->
+            <div id="admins" class="tab-content hidden">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">Adminlar</h3>
+                        <button id="addAdminBtn" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Admin qo'shish
+                        </button>
+                    </div>
+                    <div id="adminsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Admins will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="statistics" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-6 text-gray-800">Hududlar bo'yicha sotuvlar</h3>
+                        <canvas id="regionChart"></canvas>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-6 text-gray-800">Top mahsulotlar</h3>
+                        <canvas id="productsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="assignModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl w-96 max-w-md mx-4">
+            <h3 class="text-xl font-bold mb-6">Haydovchiga tayinlash</h3>
+            <select id="driverSelect" class="w-full border border-gray-300 rounded-lg px-4 py-3 mb-6 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option value="">Haydovchini tanlang</option>
+            </select>
+            <div class="flex justify-end space-x-4">
+                <button id="cancelAssign" class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Bekor qilish</button>
+                <button id="confirmAssign" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Tayinlash</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="addCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl w-96 max-w-md mx-4">
+            <h3 class="text-xl font-bold mb-6">Kategoriya qo'shish</h3>
+            <form id="categoryForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nomi (O'zbekcha)</label>
+                    <input type="text" id="categoryNameUz" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Icon (emoji)</label>
+                    <input type="text" id="categoryIcon" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="📦">
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancelCategory" class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Bekor qilish</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Qo'shish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Admin Modal -->
+    <div id="addAdminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl w-96 max-w-md mx-4">
+            <h3 class="text-xl font-bold mb-6">Admin qo'shish</h3>
+            <form id="adminForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Telegram ID</label>
+                    <input type="text" id="adminTelegramId" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Ism</label>
+                    <input type="text" id="adminName" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Telefon</label>
+                    <input type="text" id="adminPhone" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="+998901234567">
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancelAdmin" class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Bekor qilish</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Qo'shish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Driver Modal -->
+    <div id="addDriverModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl w-96 max-w-md mx-4">
+            <h3 class="text-xl font-bold mb-6">Haydovchi qo'shish</h3>
+            <form id="driverForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Telegram ID</label>
+                    <input type="text" id="driverTelegramId" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Ism</label>
+                    <input type="text" id="driverName" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Telefon</label>
+                    <input type="text" id="driverPhone" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Transport</label>
+                    <input type="text" id="driverVehicle" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Damas, Lacetti...">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Hudud</label>
+                    <input type="text" id="driverRegion" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Xiva, Urganch...">
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancelDriver" class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Bekor qilish</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Qo'shish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="addProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl w-full max-w-2xl mx-4 max-h-96 overflow-y-auto">
+            <h3 class="text-xl font-bold mb-6">Mahsulot qo'shish</h3>
+            <form id="productForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nomi (O'zbekcha)</label>
+                        <input type="text" id="productNameUz" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Kategoriya</label>
+                        <select id="productCategory" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                            <option value="">Kategoriyani tanlang</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tavsif</label>
+                    <textarea id="productDescription" rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rasm URL</label>
+                    <input type="url" id="productImage" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Variantlar</label>
+                    <div id="variantsContainer"></div>
+                    <button type="button" onclick="adminPanel.addVariantRow()" class="mt-2 text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-plus mr-1"></i>Variant qo'shish
+                    </button>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancelProduct" class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Bekor qilish</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Qo'shish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

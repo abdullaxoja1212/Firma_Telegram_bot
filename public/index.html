@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlotkayaSloboda - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div id="app">
+        <!-- Header -->
+        <header class="bg-blue-600 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold">
+                        <i class="fas fa-store mr-2"></i>
+                        SlotkayaSloboda Admin
+                    </h1>
+                    <div class="flex items-center space-x-4">
+                        <span id="currentTime" class="text-sm"></span>
+                        <button class="bg-blue-700 px-4 py-2 rounded hover:bg-blue-800">
+                            <i class="fas fa-user mr-2"></i>Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-white shadow-md">
+            <div class="container mx-auto px-4">
+                <div class="flex space-x-8">
+                    <button class="nav-btn active py-4 px-6 border-b-2 border-blue-600 text-blue-600" data-tab="dashboard">
+                        <i class="fas fa-chart-line mr-2"></i>Dashboard
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600" data-tab="orders">
+                        <i class="fas fa-shopping-cart mr-2"></i>Buyurtmalar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600" data-tab="products">
+                        <i class="fas fa-box mr-2"></i>Mahsulotlar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600" data-tab="drivers">
+                        <i class="fas fa-truck mr-2"></i>Haydovchilar
+                    </button>
+                    <button class="nav-btn py-4 px-6 hover:text-blue-600" data-tab="statistics">
+                        <i class="fas fa-chart-bar mr-2"></i>Statistika
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-full">
+                                <i class="fas fa-shopping-cart text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600">Jami buyurtmalar</p>
+                                <p class="text-2xl font-bold" id="totalOrders">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-full">
+                                <i class="fas fa-calendar-day text-green-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600">Bugungi buyurtmalar</p>
+                                <p class="text-2xl font-bold" id="todayOrders">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-full">
+                                <i class="fas fa-users text-yellow-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600">Mijozlar</p>
+                                <p class="text-2xl font-bold" id="totalCustomers">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-red-100 rounded-full">
+                                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-gray-600">Kutilayotgan</p>
+                                <p class="text-2xl font-bold" id="pendingOrders">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold mb-4">So'nggi buyurtmalar</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-2 text-left">Buyurtma №</th>
+                                    <th class="px-4 py-2 text-left">Mijoz</th>
+                                    <th class="px-4 py-2 text-left">Summa</th>
+                                    <th class="px-4 py-2 text-left">Holat</th>
+                                    <th class="px-4 py-2 text-left">Sana</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTable">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="orders" class="tab-content hidden">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold">Barcha buyurtmalar</h3>
+                        <div class="flex space-x-4">
+                            <select id="statusFilter" class="border rounded px-3 py-2">
+                                <option value="">Barcha holatlar</option>
+                                <option value="new">Yangi</option>
+                                <option value="confirmed">Tasdiqlangan</option>
+                                <option value="preparing">Tayyorlanmoqda</option>
+                                <option value="ready">Tayyor</option>
+                                <option value="delivered">Yetkazilgan</option>
+                            </select>
+                            <button id="assignOrdersBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                <i class="fas fa-truck mr-2"></i>Haydovchiga tayinlash
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-2">
+                                        <input type="checkbox" id="selectAllOrders">
+                                    </th>
+                                    <th class="px-4 py-2 text-left">Buyurtma №</th>
+                                    <th class="px-4 py-2 text-left">Mijoz</th>
+                                    <th class="px-4 py-2 text-left">Do'kon</th>
+                                    <th class="px-4 py-2 text-left">Mahsulotlar</th>
+                                    <th class="px-4 py-2 text-left">Summa</th>
+                                    <th class="px-4 py-2 text-left">Holat</th>
+                                    <th class="px-4 py-2 text-left">Sana</th>
+                                    <th class="px-4 py-2 text-left">Amallar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="products" class="tab-content hidden">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold">Mahsulotlar boshqaruvi</h3>
+                        <button id="addProductBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                            <i class="fas fa-plus mr-2"></i>Yangi mahsulot
+                        </button>
+                    </div>
+                    
+                    <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drivers Tab -->
+            <div id="drivers" class="tab-content hidden">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold">Haydovchilar</h3>
+                        <button id="addDriverBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                            <i class="fas fa-plus mr-2"></i>Yangi haydovchi
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="driversGrid">
+                        <!-- Drivers will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="statistics" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-bold mb-4">Hududlar bo'yicha sotuvlar</h3>
+                        <canvas id="regionChart"></canvas>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-bold mb-4">Top mahsulotlar</h3>
+                        <canvas id="productsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="assignModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white p-6 rounded-lg w-96">
+            <h3 class="text-lg font-bold mb-4">Haydovchiga tayinlash</h3>
+            <select id="driverSelect" class="w-full border rounded px-3 py-2 mb-4">
+                <option value="">Haydovchini tanlang</option>
+            </select>
+            <div class="flex justify-end space-x-4">
+                <button id="cancelAssign" class="px-4 py-2 border rounded hover:bg-gray-100">Bekor qilish</button>
+                <button id="confirmAssign" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tayinlash</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
