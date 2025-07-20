@@ -41,42 +41,11 @@ cd telegram-bot-system
 npm install
 ```
 
-3. **Environment variables sozlash:**
-`.env` faylini yarating va quyidagi ma'lumotlarni kiriting:
-```
-BOT_TOKEN=your_telegram_bot_token
-MONGODB_URI=mongodb://localhost:27017/savdo_bot
-JWT_SECRET=your_jwt_secret_key
-PORT=3000
-```
-
-4. **MongoDB ishga tushirish:**
-MongoDB serverini ishga tushiring
-
-5. **Ma'lumotlar bazasini to'ldirish:**
-```bash
-node scripts/seedData.js
-```
-
-6. **Serverni ishga tushirish:**
+3. **Serverni ishga tushirish:**
 ```bash
 npm start
 ```
 
-## Telegram Bot sozlash
-
-1. **BotFather orqali bot yaratish:**
-   - Telegram'da @BotFather ga yozing
-   - `/newbot` komandasi bilan yangi bot yarating
-   - Bot tokenini `.env` fayliga qo'ying
-
-2. **Bot komandalarini sozlash:**
-   - `/setcommands` dan foydalaning
-   - Quyidagi komandalarni qo'shing:
-   ```
-   start - Botni ishga tushirish
-   help - Yordam
-   ```
 
 ## Foydalanish
 
@@ -131,10 +100,3 @@ npm start
 - [ ] Geolokatsiya asosida yetkazib berish optimizatsiyasi
 - [ ] Chatbot AI yordamchisi
 
-## Yordam
-
-Savollar yoki muammolar bo'lsa, GitHub Issues bo'limida yozing yoki email orqali murojaat qiling.
-
-## Litsenziya
-
-MIT License
